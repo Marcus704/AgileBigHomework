@@ -1,26 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, Fragment, useEffect } from "react";
+import TodoItem from "./TodoItem";
+import { getTodos, addTodo, deleteTodo, updateTodo } from "./api/TodoApi";
+import "./App.css";
+import _ from "lodash";
 
-function App() {
+const App = () => {
+  const [list, setList] = useState(null);
+  const [error, setError] = useState("");
+
+  const handleLoadTasks = () => {
+    getTodos()
+      .then((response) => {
+        setList(response);
+      })
+      .catch((error) => {
+        setError("Unable to retrieve todo's");
+      });
+  };
+
+
+  useEffect(() => {
+    handleLoadTasks();
+  }, []);
+
+  if (list === null) {
+    return <div>Tasks is loading ...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <ul data-testid="task-items" className="task-items">
+        {list.map((item) => (
+          <TodoItem
+            key={item.id}
+            item={item}
+            index={item.id}
+          />
+        ))}
+      </ul>
+    </Fragment>
   );
-}
+};
 
 export default App;
