@@ -19,20 +19,6 @@ const App = () => {
       });
   };
 
-  // const handleAddTask = () => {
-  //   if (inputValue === "") return;
-
-  //   const newTask = {
-  //     id: _.parseInt(list.length ? list[list.length - 1].id : 0) + 1,
-  //     content: inputValue,
-  //   };
-
-  //   addTodo(newTask).then(() => {
-  //     setList([...list, newTask]);
-  //     setInputValue("");
-  //   });
-  // };
-
   const handleDeleteTask = (id) =>
     deleteTodo(id).then(() => {
       setList(list.filter((item) => item.id !== id));

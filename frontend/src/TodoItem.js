@@ -20,6 +20,8 @@ const TodoItem = ({ item, onItemUpdate, onItemDelete }) => {
         margin="dense"
         data-testid="task-item-content"
       />
+      
+      
       <span
         className="text-button edit-button"
         onClick={() => setIsEditable(!isEditable)}
