@@ -8,6 +8,7 @@ const App = () => {
   const [inputValue, setInputValue] = useState("");
   const [list, setList] = useState(null);
   const [error, setError] = useState("");
+  const [inputValue, setInputValue] = useState("");
 
   const handleLoadTasks = () => {
     getTodos()
