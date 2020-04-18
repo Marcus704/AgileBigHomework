@@ -31,4 +31,66 @@ describe("<App>", () => {
     );
   });
 
+  test("should delete todo item correctly", async () => {
+    jest
+      .spyOn(TodoApi, "deleteTodo")
+      .mockImplementation(() => Promise.resolve({}));
+
+    await act(async () => {
+      render(<App />);
+    });
+
+    act(() => {
+      fireEvent.click(getByTestId(document.body, "delete-button"));
+    });
+    await wait(() => expect(TodoApi.deleteTodo).toHaveBeenCalled());
+    expect(getByTestId(document.body, "task-items")).toBeEmpty();
+  });
+
+  test("should edit todo item correctly", async () => {
+    jest
+      .spyOn(TodoApi, "updateTodo")
+      .mockImplementation(() => Promise.resolve(updateItem));
+
+    await act(async () => {
+      render(<App />);
+    });
+
+    const textarea = document.querySelector("li textarea");
+    act(() => {
+      fireEvent.click(getByTestId(document.body, "edit-button"));
+      fireEvent.change(textarea, {
+        target: { value: updateItem.content },
+      });
+      fireEvent.blur(textarea);
+    });
+
+    await wait(() => expect(TodoApi.updateTodo).toHaveBeenCalled());
+    expect(textarea.value).toEqual(updateItem.content);
+  });
+
+  test("should add todo item correctly", async () => {
+    jest
+      .spyOn(TodoApi, "addTodo")
+      .mockImplementation(() => Promise.resolve(addedItem));
+
+    await act(async () => {
+      render(<App />);
+    });
+
+    act(() => {
+      fireEvent.change(getByTestId(document.body, "task-input"), {
+        target: { value: addedItem.content },
+      });
+    });
+
+    act(() => {
+      fireEvent.click(getByTestId(document.body, "add-button"));
+    });
+    await wait(() => expect(TodoApi.addTodo).toHaveBeenCalled());
+
+    const taskItems = getAllByTestId(document.body, "task-item");
+    expect(taskItems.length).toEqual(2);
+    expect(taskItems[1]).toHaveTextContent(addedItem.content);
+  });
 });

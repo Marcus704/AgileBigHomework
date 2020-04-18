@@ -7,6 +7,7 @@ import _ from "lodash";
 const App = () => {
   const [list, setList] = useState(null);
   const [error, setError] = useState("");
+  const [inputValue, setInputValue] = useState("");
 
   const handleLoadTasks = () => {
     getTodos()
