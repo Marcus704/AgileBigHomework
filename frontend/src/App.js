@@ -5,6 +5,7 @@ import "./App.css";
 import _ from "lodash";
 
 const App = () => {
+  const [inputValue, setInputValue] = useState("");
   const [list, setList] = useState(null);
   const [error, setError] = useState("");
 
@@ -18,6 +19,22 @@ const App = () => {
       });
   };
 
+ 
+
+  const handleDeleteTask = (id) =>
+    deleteTodo(id).then(() => {
+      setList(list.filter((item) => item.id !== id));
+    });
+
+  const handleUpdateTask = (task) => {
+    if (task.content === "") return;
+
+    updateTodo(task).then((response) => {
+      setList(
+        list.map((x) => (x.id === response.id ? { ...x, ...response } : x))
+      );
+    });
+  };
 
   useEffect(() => {
     handleLoadTasks();
@@ -33,12 +50,15 @@ const App = () => {
 
   return (
     <Fragment>
+      
       <ul data-testid="task-items" className="task-items">
         {list.map((item) => (
           <TodoItem
             key={item.id}
             item={item}
             index={item.id}
+            onItemDelete={handleDeleteTask}
+            onItemUpdate={handleUpdateTask}
           />
         ))}
       </ul>
