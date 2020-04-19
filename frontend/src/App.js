@@ -19,6 +19,20 @@ const App = () => {
       });
   };
 
+  const handleAddTask = () => {
+    if (inputValue === "") return;
+
+    const newTask = {
+      id: _.parseInt(list.length ? list[list.length - 1].id : 0) + 1,
+      content: inputValue,
+    };
+
+    addTodo(newTask).then(() => {
+      setList([...list, newTask]);
+      setInputValue("");
+    });
+  };
+
   const handleDeleteTask = (id) =>
     deleteTodo(id).then(() => {
       setList(list.filter((item) => item.id !== id));
@@ -48,18 +62,18 @@ const App = () => {
 
   return (
     <Fragment>
-      {/* <div>
+      <div>
         <input
           className="task-input"
           type="text"
           value={inputValue}
-          // onChange={(e) => setInputValue(e.target.value)}
+          onChange={(e) => setInputValue(e.target.value)}
           data-testid="task-input"
         />
         <button className="submit-button" onClick={handleAddTask} data-testid="add-button" >
           提交
         </button>
-      </div> */}
+      </div>
       <ul data-testid="task-items" className="task-items">
         {list.map((item) => (
           <TodoItem
