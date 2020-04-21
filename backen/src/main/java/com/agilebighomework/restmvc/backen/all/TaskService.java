@@ -19,4 +19,10 @@ public class TaskService {
         db.put(t.getId(),t);
         return true;
     }
+
+    public HashMap<String, Task> findAll(){
+        if(db.isEmpty())
+            return null;
+        return db;
+    }
 }
