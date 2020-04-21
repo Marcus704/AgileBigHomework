@@ -25,4 +25,11 @@ public class TaskService {
             return null;
         return db;
     }
+
+    public boolean delete(String id){
+        if(db.isEmpty())
+            return false;
+        db.remove(id);
+        return true;
+    }
 }
