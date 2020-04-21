@@ -36,4 +36,17 @@ public class TaskService {
     public Task findById(String id){
         return db.get(id);
     }
+
+    public boolean changeById(String id,Task newTask){
+        if(db.containsKey(id)){
+            db.remove(id);
+            db.put(newTask.getId(),newTask);
+            return true;
+        }
+        return false;
+    }
+
+    public HashMap<String, Task> getDb() {
+        return db;
+    }
 }

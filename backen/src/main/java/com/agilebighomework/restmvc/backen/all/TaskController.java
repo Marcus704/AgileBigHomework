@@ -32,4 +32,11 @@ public class TaskController {
     public Task findById(@PathVariable String id) {
         return  taskService.findById(id);
     }
+
+    @PutMapping("/api/task/{id}")
+    public  String changeById(@PathVariable String id,@RequestBody Task t){
+        if(taskService.changeById(id,t))
+            return "success";
+        return "fail";
+    }
 }
