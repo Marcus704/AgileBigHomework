@@ -32,4 +32,8 @@ public class TaskService {
         db.remove(id);
         return true;
     }
+
+    public Task findById(String id){
+        return db.get(id);
+    }
 }

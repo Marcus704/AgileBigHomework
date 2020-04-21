@@ -27,4 +27,9 @@ public class TaskController {
             return "success";
         return "fail";
     }
+
+    @GetMapping("/api/task/{id}")
+    public Task findById(@PathVariable String id) {
+        return  taskService.findById(id);
+    }
 }
