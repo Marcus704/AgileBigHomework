@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class TaskController {
@@ -16,9 +19,14 @@ public class TaskController {
         return "failed";
     }
 
-    @GetMapping("/api/tasks/")
-    public HashMap<String, Task> getAll(){
-        return taskService.findAll();
+    @GetMapping("/api/tasks")
+    public List<Task> getAll(){
+        HashMap<String, Task> all = taskService.findAll();
+        List<Task> tasks = new LinkedList<>();
+        for(Map.Entry<String, Task> t : all.entrySet()) {
+            tasks.add(t.getValue());
+        }
+        return  tasks;
     }
 
     @DeleteMapping("/api/task/{id}")
