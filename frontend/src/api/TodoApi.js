@@ -1,9 +1,9 @@
 import {doRequest, doRequestWithBody, doDeleteRequest} from './BaseApi'
 
-const TODO_PATH = "/api/tasks";
+const TODO_PATH = "/api/task";
 
 export const getTodos = () => {
-     return doRequest(TODO_PATH)
+     return doRequest(TODO_PATH + 's')
     .then(response => response.json());
 }
 
